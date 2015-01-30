@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SharpShapes
 {
-    public class Rectangle
+    public class Rectangle : Shape
     {
         private int width;
         public int Width
@@ -20,6 +20,11 @@ namespace SharpShapes
             get { return this.height; }
         }
 
+        public override int SidesCount
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public Rectangle(int width, int height)
         {
             if (width <= 0 || height <= 0)
@@ -28,6 +33,21 @@ namespace SharpShapes
             }
             this.width = width;
             this.height = height;
+        }
+
+        public override decimal Area()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override decimal Perimeter()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Scale(int percent)
+        {
+            throw new NotImplementedException();
         }
     }
 }
