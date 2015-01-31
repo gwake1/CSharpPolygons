@@ -1,4 +1,4 @@
-﻿﻿using SharpShapes;
+﻿using SharpShapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace GrapeShapes
 {
@@ -57,12 +58,12 @@ namespace GrapeShapes
         private void PopulateTestShapes()
         {
             var square = new Square(30);
-            square.FillColor = Colors.AliceBlue;
-            square.BorderColor = Colors.BurlyWood;
+            SolidColorBrush mediaFillColor = new SolidColorBrush();
+            mediaFillColor.Color = System.Windows.Media.Color.FromArgb(square.FillColor.A, square.FillColor.R, square.FillColor.G, square.FillColor.B);
 
             var square2 = new Square(200);
-            square2.BorderColor = Colors.Navy;
-            square2.FillColor = Colors.Fuchsia;
+            SolidColorBrush mediaBorderColor = new SolidColorBrush();
+            mediaBorderColor.Color = System.Windows.Media.Color.FromArgb(square.BorderColor.A, square.BorderColor.R, square.BorderColor.B, square.BorderColor.G);
             square.DrawOnto(ShapeCanvas, 1, 50);
             square.DrawOnto(ShapeCanvas, 50, 5);
         }

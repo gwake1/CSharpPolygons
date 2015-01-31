@@ -1,64 +1,128 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Drawing;
 using SharpShapes;
 
 namespace TestSharpShapes
 {
     [TestClass]
-    public class UnitTestShape
+    public class UnitTestSquares
     {
-        public class MyShape : Shape
+        [TestMethod]
+        public void TestSquareConstructor()
         {
-            public override int SidesCount
-            {
-                get { throw new NotImplementedException(); }
-            }
-
-            public override void Scale(int percent)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override decimal Perimeter()
-            {
-                throw new NotImplementedException();
-            }
-
-            public override decimal Area()
-            {
-                throw new NotImplementedException();
-            }
+            Square square = new Square(40);
+            Assert.AreEqual(40, square.Height);
+            Assert.AreEqual(40, square.Width);
         }
 
         [TestMethod]
-        public void TestSettingBorderColor()
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestSquareConstructorChecksSidePositivity()
         {
-            Shape shape = new MyShape();
-            shape.BorderColor = Color.AliceBlue;
-            Assert.AreEqual(Color.AliceBlue, shape.BorderColor);
+            new Square(-1);
         }
 
         [TestMethod]
-        public void TestDefaultBorderColor()
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestSquareConstructorChecksSideIsntZero()
         {
-            Shape shape = new MyShape();
-            Assert.AreEqual(Color.Tomato, shape.BorderColor);
+            new Square(0);
         }
 
         [TestMethod]
-        public void TestSettingFillColor()
+        public void TestScaleSquare200Percent()
         {
-            Shape shape = new MyShape();
-            shape.FillColor = Color.AliceBlue;
-            Assert.AreEqual(Color.AliceBlue, shape.FillColor);
+            Square square = new Square(10);
+            square.Scale(200);
+            Assert.AreEqual(20, square.Height);
+            Assert.AreEqual(20, square.Width);
         }
 
         [TestMethod]
-        public void TestDefaultFillColor()
+        public void TestScaleSquare150Percent()
         {
-            Shape shape = new MyShape();
-            Assert.AreEqual(Color.Bisque, shape.FillColor);
+            Square square = new Square(10);
+            square.Scale(150);
+            Assert.AreEqual(15, square.Height);
+            Assert.AreEqual(15, square.Width);
+        }
+
+        [TestMethod]
+        public void TestScaleSquare100Percent()
+        {
+            Square square = new Square(10);
+            square.Scale(100);
+            Assert.AreEqual(10, square.Height);
+            Assert.AreEqual(10, square.Width);
+        }
+
+        [TestMethod]
+        public void TestScaleSquare37Percent()
+        {
+            Square square = new Square(15);
+            square.Scale(37);
+            Assert.AreEqual((decimal)5.55, square.Height);
+            Assert.AreEqual((decimal)5.55, square.Width);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestScaleSquareTo0Percent()
+        {
+            Square square = new Square(15);
+            square.Scale(0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void TestScaleSquareToNegativePercent()
+        {
+            Square square = new Square(15);
+            square.Scale(-10);
+        }
+
+        [TestMethod]
+        public void TestSquareSides()
+        {
+            Square square = new Square(15);
+            Assert.AreEqual(4, square.SidesCount);
+        }
+
+        [TestMethod]
+        public void TestSquareArea()
+        {
+            Square square = new Square(15);
+            Assert.AreEqual(225, square.Area());
+        }
+
+
+        [TestMethod]
+        public void TestBiggerSquareArea()
+        {
+            Square square = new Square(10);
+            Assert.AreEqual(100, square.Area());
+        }
+
+        [TestMethod]
+        public void TestSquarePerimeter()
+        {
+            Square square = new Square(15);
+            Assert.AreEqual(60, square.Perimeter());
+        }
+
+        [TestMethod]
+        public void TestBiggerSquarePerimeter()
+        {
+            Square square = new Square(10);
+            Assert.AreEqual(40, square.Perimeter());
+        }
+
+        [TestMethod]
+        public void TestDefaultColors()
+        {
+            Square shape = new Square(15);
+            Assert.AreEqual(System.Drawing.Color.Bisque, shape.FillColor);
+            Assert.AreEqual(System.Drawing.Color.Tomato, shape.BorderColor);
         }
     }
 }
